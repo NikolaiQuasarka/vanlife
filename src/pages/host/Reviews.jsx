@@ -1,5 +1,3 @@
-export default function(){
-    return(
-        <h1>Review</h1>
-    )
+export default function () {
+    return <h1>Review</h1>
 }

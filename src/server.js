@@ -17,7 +17,6 @@ export default function(){
 
         routes() {
             this.namespace = "api"
-
             this.get("/vans", (schema, request) => {
                 return schema.vans.all()
             })
