@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Link, useSearchParams, useLocation } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 export default function Vans() {
     const [buses, setBuses] = useState(null)
@@ -27,7 +27,10 @@ export default function Vans() {
                       <Link
                           to={el.id}
                           key={el.id}
-                          state={{ search: `?${searchParams.toString()}` }}
+                          state={{
+                              search: `?${searchParams.toString()}`,
+                              type: typeFilter,
+                          }}
                       >
                           <img src={el.imageUrl} />
                           <div className="info">

@@ -1,4 +1,4 @@
-import { useParams, Link, useLocation } from "react-router-dom"
+import { useParams, Link, useLocation, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react"
 
 export default function VanDetail() {
@@ -16,7 +16,7 @@ export default function VanDetail() {
     return (
         <main className="van-detail">
             <Link to={`..${search}`} relative="path">
-                Back to all vans
+                {`Back to ${search ? location.state.type : "all"} vans`}
             </Link>
             {vanItem === null ? (
                 false
