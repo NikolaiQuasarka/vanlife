@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Vans from "./pages/Vans"
+import UnfoundPage from "./pages/UnfoundPage"
 import VanDetail from "./pages/VanDetail"
 import Layout from "./components/Layout"
 import HostLayout from "./pages/host/HostLayout"
@@ -42,6 +43,7 @@ export default function App() {
                         </Route>
                         <Route path="reviews" element={<Reviews />} />
                     </Route>
+                    <Route path="*" element={<UnfoundPage />} />
                 </Route>
             </Routes>
         </BrowserRouter>
