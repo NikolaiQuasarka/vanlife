@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
+import { getVans } from "../api"
 
 export default function Vans() {
     const [buses, setBuses] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
+    const [loading, setLoading] = useState(false)
 
     const typeFilter = searchParams.get("type")
 
     useEffect(() => {
-        fetch("/api/vans")
-            .then((res) => res.json())
-            .then((data) => setBuses(data.vans))
-            .catch((err) => console.error(err))
+        async function loadVans() {
+            setLoading(true)
+            const data = await getVans()
+            setBuses(data)
+            setLoading(false)
+        }
+        loadVans()
     }, [])
+
+    useEffect(() => {}, [])
 
     const filteredBuses =
         typeFilter && buses
@@ -55,6 +62,10 @@ export default function Vans() {
                       </Link>
                   )
               })
+
+    if (loading) {
+        return <h1>Loading...</h1>
+    }
 
     return (
         <main className="vans">
