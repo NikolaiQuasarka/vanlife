@@ -6,20 +6,25 @@ export default function Vans() {
     const [buses, setBuses] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     const typeFilter = searchParams.get("type")
 
     useEffect(() => {
         async function loadVans() {
             setLoading(true)
-            const data = await getVans()
-            setBuses(data)
-            setLoading(false)
+            try {
+                const data = await getVans()
+                setBuses(data)
+                console.log(data)
+            } catch (err) {
+                setError(err)
+            } finally {
+                setLoading(false)
+            }
         }
         loadVans()
     }, [])
-
-    useEffect(() => {}, [])
 
     const filteredBuses =
         typeFilter && buses
@@ -67,6 +72,9 @@ export default function Vans() {
         return <h1>Loading...</h1>
     }
 
+    if (error) {
+        return <h1>Error: {error.message}</h1>
+    }
     return (
         <main className="vans">
             <section className="searching">
