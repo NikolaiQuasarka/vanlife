@@ -2,6 +2,10 @@ import { useEffect, useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import { getVans } from "../api"
 
+export function loadaer() {
+    return "Vans data go here"
+}
+
 export default function Vans() {
     const [buses, setBuses] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
