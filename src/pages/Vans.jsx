@@ -3,6 +3,7 @@ import { Link, useSearchParams, useLoaderData } from "react-router-dom"
 import { getVans } from "../api"
 
 export function loader() {
+    // throw "Error is here"
     return getVans()
 }
 
@@ -58,7 +59,7 @@ export default function Vans() {
               })
 
     if (error) {
-        return <h1>Error: {error.message}</h1>
+        // return <h1>Error: {error.message}</h1>
     }
     return (
         <main className="vans">

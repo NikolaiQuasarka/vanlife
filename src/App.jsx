@@ -24,6 +24,8 @@ import Pricing from "./pages/host/vans/Pricing"
 import Photos from "./pages/host/vans/Photos"
 import HostVansLayout from "./pages/host/vans/VansLayout"
 
+import ErrorElement from "./components/Error"
+
 export default function App() {
     const router = createBrowserRouter(
         createRoutesFromElements(
@@ -31,7 +33,7 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="about" element={<About />} />
 
-                <Route path="vans">
+                <Route path="vans" errorElement={<ErrorElement />}>
                     <Route index element={<Vans />} loader={VansLoader} />
                     <Route path=":id" element={<VanDetail />} />
                 </Route>
