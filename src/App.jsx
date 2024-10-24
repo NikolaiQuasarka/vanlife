@@ -10,7 +10,7 @@ import Home from "./pages/Home"
 import About from "./pages/About"
 import Vans, { loader as VansLoader } from "./pages/Vans"
 import UnfoundPage from "./pages/UnfoundPage"
-import VanDetail from "./pages/VanDetail"
+import VanDetail, { loader as VanDetailLoader } from "./pages/VanDetail"
 import Layout from "./components/Layout"
 import HostLayout from "./pages/host/HostLayout"
 
@@ -35,21 +35,78 @@ export default function App() {
 
                 <Route path="vans" errorElement={<ErrorElement />}>
                     <Route index element={<Vans />} loader={VansLoader} />
-                    <Route path=":id" element={<VanDetail />} />
+                    <Route
+                        path=":id"
+                        element={<VanDetail />}
+                        loader={VanDetailLoader}
+                    />
                 </Route>
 
                 <Route path="host" element={<HostLayout />}>
-                    <Route path="" element={<Host />} />
-                    <Route path="income" element={<Income />} />
-                    <Route path="vans">
-                        <Route index element={<HostVans />} />
-                        <Route path=":id" element={<HostVansLayout />}>
-                            <Route path="" element={<Details />} />
-                            <Route path="pricing" element={<Pricing />} />
-                            <Route path="photos" element={<Photos />} />
+                    <Route
+                        path=""
+                        loader={async () => {
+                            return null
+                        }}
+                        element={<Host />}
+                    />
+                    <Route
+                        path="income"
+                        loader={async () => {
+                            return null
+                        }}
+                        element={<Income />}
+                    />
+                    <Route
+                        path="vans"
+                        loader={async () => {
+                            return null
+                        }}
+                    >
+                        <Route
+                            index
+                            element={<HostVans />}
+                            loader={async () => {
+                                return null
+                            }}
+                        />
+                        <Route
+                            path=":id"
+                            element={<HostVansLayout />}
+                            loader={async () => {
+                                return null
+                            }}
+                        >
+                            <Route
+                                path=""
+                                element={<Details />}
+                                loader={async () => {
+                                    return null
+                                }}
+                            />
+                            <Route
+                                path="pricing"
+                                element={<Pricing />}
+                                loader={async () => {
+                                    return null
+                                }}
+                            />
+                            <Route
+                                path="photos"
+                                element={<Photos />}
+                                loader={async () => {
+                                    return null
+                                }}
+                            />
                         </Route>
                     </Route>
-                    <Route path="reviews" element={<Reviews />} />
+                    <Route
+                        path="reviews"
+                        loader={async () => {
+                            return null
+                        }}
+                        element={<Reviews />}
+                    />
                 </Route>
                 <Route path="*" element={<UnfoundPage />} />
             </Route>

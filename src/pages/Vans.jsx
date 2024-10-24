@@ -3,23 +3,18 @@ import { Link, useSearchParams, useLoaderData } from "react-router-dom"
 import { getVans } from "../api"
 
 export function loader() {
-    // throw "Error is here"
     return getVans()
 }
 
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const [error, setError] = useState(null)
-
     const vans = useLoaderData()
 
     const typeFilter = searchParams.get("type")
-
-    const filteredBuses =
-        typeFilter && vans
-            ? vans.filter((bus) => bus.type === typeFilter)
-            : vans
+    const filteredBuses = typeFilter
+        ? vans.filter((bus) => bus.type === typeFilter)
+        : vans
 
     const busesElements =
         filteredBuses === null
@@ -30,7 +25,9 @@ export default function Vans() {
                           to={el.id}
                           key={el.id}
                           state={{
-                              search: `?${searchParams.toString()}`,
+                              search: searchParams
+                                  ? searchParams.toString()
+                                  : null,
                               type: typeFilter,
                           }}
                       >
@@ -58,9 +55,6 @@ export default function Vans() {
                   )
               })
 
-    if (error) {
-        // return <h1>Error: {error.message}</h1>
-    }
     return (
         <main className="vans">
             <section className="searching">
