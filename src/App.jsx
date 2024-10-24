@@ -8,7 +8,7 @@ import {
 } from "react-router-dom"
 import Home from "./pages/Home"
 import About from "./pages/About"
-import Vans, { loadaer as VansLoader } from "./pages/Vans"
+import Vans, { loader as VansLoader } from "./pages/Vans"
 import UnfoundPage from "./pages/UnfoundPage"
 import VanDetail from "./pages/VanDetail"
 import Layout from "./components/Layout"
@@ -31,8 +31,8 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="about" element={<About />} />
 
-                <Route path="vans" loader={VansLoader}>
-                    <Route index element={<Vans />} />
+                <Route path="vans">
+                    <Route index element={<Vans />} loader={VansLoader} />
                     <Route path=":id" element={<VanDetail />} />
                 </Route>
 

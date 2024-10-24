@@ -1,39 +1,24 @@
 import { useEffect, useState } from "react"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useSearchParams, useLoaderData } from "react-router-dom"
 import { getVans } from "../api"
 
-export function loadaer() {
-    return "Vans data go here"
+export function loader() {
+    return getVans()
 }
 
 export default function Vans() {
-    const [buses, setBuses] = useState(null)
     const [searchParams, setSearchParams] = useSearchParams()
-    const [loading, setLoading] = useState(false)
+
     const [error, setError] = useState(null)
+
+    const vans = useLoaderData()
 
     const typeFilter = searchParams.get("type")
 
-    useEffect(() => {
-        async function loadVans() {
-            setLoading(true)
-            try {
-                const data = await getVans()
-                setBuses(data)
-                console.log(data)
-            } catch (err) {
-                setError(err)
-            } finally {
-                setLoading(false)
-            }
-        }
-        loadVans()
-    }, [])
-
     const filteredBuses =
-        typeFilter && buses
-            ? buses.filter((bus) => bus.type === typeFilter)
-            : buses
+        typeFilter && vans
+            ? vans.filter((bus) => bus.type === typeFilter)
+            : vans
 
     const busesElements =
         filteredBuses === null
@@ -71,10 +56,6 @@ export default function Vans() {
                       </Link>
                   )
               })
-
-    if (loading) {
-        return <h1>Loading...</h1>
-    }
 
     if (error) {
         return <h1>Error: {error.message}</h1>
