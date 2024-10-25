@@ -18,13 +18,17 @@ import Host from "./pages/Host"
 import Income from "./pages/host/Income"
 import Reviews from "./pages/host/Reviews"
 
-import HostVans from "./pages/host/Vans"
+import HostVans, { loader as HostVansLoader } from "./pages/host/Vans"
 import Details from "./pages/host/vans/Details"
 import Pricing from "./pages/host/vans/Pricing"
 import Photos from "./pages/host/vans/Photos"
 import HostVansLayout from "./pages/host/vans/VansLayout"
 
 import ErrorElement from "./components/Error"
+
+import { isAuthorized } from "./utils"
+
+import Login from "./pages/Login"
 
 export default function App() {
     const router = createBrowserRouter(
@@ -42,61 +46,47 @@ export default function App() {
                     />
                 </Route>
 
+                <Route path="login" element={<Login />} />
+
                 <Route path="host" element={<HostLayout />}>
                     <Route
                         path=""
-                        loader={async () => {
-                            return null
-                        }}
+                        loader={async () => await isAuthorized()}
                         element={<Host />}
                     />
                     <Route
                         path="income"
-                        loader={async () => {
-                            return null
-                        }}
+                        loader={async () => await isAuthorized()}
                         element={<Income />}
                     />
                     <Route
                         path="vans"
-                        loader={async () => {
-                            return null
-                        }}
+                        loader={async () => await HostVansLoader()}
                     >
                         <Route
                             index
                             element={<HostVans />}
-                            loader={async () => {
-                                return null
-                            }}
+                            loader={async () => await isAuthorized()}
                         />
                         <Route
                             path=":id"
                             element={<HostVansLayout />}
-                            loader={async () => {
-                                return null
-                            }}
+                            loader={async () => await isAuthorized()}
                         >
                             <Route
                                 path=""
                                 element={<Details />}
-                                loader={async () => {
-                                    return null
-                                }}
+                                loader={async () => await isAuthorized()}
                             />
                             <Route
                                 path="pricing"
                                 element={<Pricing />}
-                                loader={async () => {
-                                    return null
-                                }}
+                                loader={async () => await isAuthorized()}
                             />
                             <Route
                                 path="photos"
                                 element={<Photos />}
-                                loader={async () => {
-                                    return null
-                                }}
+                                loader={async () => await isAuthorized()}
                             />
                         </Route>
                     </Route>

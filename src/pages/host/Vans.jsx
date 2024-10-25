@@ -1,4 +1,10 @@
 import { Link } from "react-router-dom"
+import { isAuthorized } from "../../utils"
+
+export async function loader() {
+    await isAuthorized()
+    return null
+}
 
 export default function Vans() {
     return (
