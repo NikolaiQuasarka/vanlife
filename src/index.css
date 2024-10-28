@@ -242,6 +242,18 @@ main {
         }
     }
 }
+.login {
+    padding: 30px;
+    form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 10px;
+        input {
+            width: max-content;
+            min-width: 200px;
+        }
+    }
+}
 
 nav.host-nav {
     display: flex;

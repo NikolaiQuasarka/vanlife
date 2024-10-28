@@ -4,7 +4,8 @@ export async function isAuthorized() {
     const isLoggedIn = false
 
     if (!isLoggedIn) {
-        const response = redirect("/login")
+        const message = "You must Log in first"
+        const response = redirect("/login" + `?message=${message}`)
         response.body = true
         throw response
     }
