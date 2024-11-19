@@ -15,6 +15,7 @@ export default function Login() {
                 <input type="email"></input>
                 <input type="password"></input>
                 <input type="submit" value="Log in" />
+                {bhbh === 0 ? nhbh : hbb}
             </form>
         </main>
     )

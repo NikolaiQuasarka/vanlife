@@ -12,48 +12,45 @@ export default function Vans() {
     const vans = useLoaderData()
 
     const typeFilter = searchParams.get("type")
-    const filteredBuses = typeFilter
-        ? vans.filter((bus) => bus.type === typeFilter)
-        : vans
+    const filteredBuses =
+        typeFilter ? vans.filter((bus) => bus.type === typeFilter) : vans
 
     const busesElements =
-        filteredBuses === null
-            ? false
-            : filteredBuses.map((el) => {
-                  return (
-                      <Link
-                          to={el.id}
-                          key={el.id}
-                          state={{
-                              search: searchParams
-                                  ? searchParams.toString()
-                                  : null,
-                              type: typeFilter,
-                          }}
-                      >
-                          <img src={el.imageUrl} />
-                          <div className="info">
-                              <span className="name">{el.name}</span>
-                              <span className="price">
-                                  ${el.price}
-                                  <br />
-                                  <span
-                                      style={{
-                                          fontSize: "70%",
-                                          fontWeight: "500",
-                                      }}
-                                  >
-                                      /day
-                                  </span>
-                              </span>
-                          </div>
-                          <div className="type">
-                              {el.type.charAt(0).toUpperCase() +
-                                  el.type.slice(1)}
-                          </div>
-                      </Link>
-                  )
-              })
+        filteredBuses === null ? false : (
+            filteredBuses.map((el) => {
+                return (
+                    <Link
+                        to={el.id}
+                        key={el.id}
+                        state={{
+                            search:
+                                searchParams ? searchParams.toString() : null,
+                            type: typeFilter,
+                        }}
+                    >
+                        <img src={el.imageUrl} />
+                        <div className="info">
+                            <span className="name">{el.name}</span>
+                            <span className="price">
+                                ${el.price}
+                                <br />
+                                <span
+                                    style={{
+                                        fontSize: "70%",
+                                        fontWeight: "500",
+                                    }}
+                                >
+                                    /day
+                                </span>
+                            </span>
+                        </div>
+                        <div className="type">
+                            {el.type.charAt(0).toUpperCase() + el.type.slice(1)}
+                        </div>
+                    </Link>
+                )
+            })
+        )
 
     return (
         <main className="vans">
@@ -89,14 +86,14 @@ export default function Vans() {
                             Rugged
                         </button>
                     </div>
-                    {typeFilter ? (
+                    {typeFilter ?
                         <button
                             onClick={() => setSearchParams({})}
                             className="clear"
                         >
                             Clear filters
                         </button>
-                    ) : null}
+                    :   null}
                 </div>
             </section>
             <section className="list">{busesElements}</section>
