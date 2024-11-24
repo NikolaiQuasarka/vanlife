@@ -28,7 +28,10 @@ import ErrorElement from "./components/Error"
 
 import { isAuthorized } from "./utils"
 
-import Login, { loader as LogingLoader } from "./pages/Login"
+import Login, {
+    loader as LogingLoader,
+    action as LoginAction,
+} from "./pages/Login"
 
 export default function App() {
     const router = createBrowserRouter(
@@ -46,7 +49,12 @@ export default function App() {
                     />
                 </Route>
 
-                <Route path="login" element={<Login />} loader={LogingLoader} />
+                <Route
+                    path="login"
+                    element={<Login />}
+                    loader={LogingLoader}
+                    action={LoginAction}
+                />
 
                 <Route path="host" element={<HostLayout />}>
                     <Route
