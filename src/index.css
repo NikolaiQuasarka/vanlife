@@ -263,3 +263,7 @@ a.activeLink {
     color: rgba(22, 22, 22, 1);
     text-decoration: underline;
 }
+
+.loginSubmitBtn:disabled {
+    background-color: red;
+}

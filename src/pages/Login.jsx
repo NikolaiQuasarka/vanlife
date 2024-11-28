@@ -1,5 +1,11 @@
 import { useState } from "react"
-import { useLoaderData, Form, redirect, useActionData } from "react-router-dom"
+import {
+    useLoaderData,
+    Form,
+    redirect,
+    useActionData,
+    useNavigation,
+} from "react-router-dom"
 import { loginUser } from "../api"
 import { setLoggedIn } from "../utils"
 
@@ -28,60 +34,21 @@ export default function Login() {
     const message = useLoaderData()
     const messageElement = message ? <h2>{message}</h2> : null
 
-    //const [loginStatus, setLoginStatus] = useState("idle")
-    //const [loginErr, setLoginErr] = useState(null)
-
-    /* const [userData, setUserData] = useState({
-        email: "",
-        password: "",
-    })
-    function handleChange(e) {
-        const target = e.target
-        setUserData((prev) => {
-            return { ...prev, [target.name]: target.value }
-        })
-    }
-    async function handleSubmit(e) {
-        e.preventDefault()
-        setLoginStatus("submitting")
-        try {
-            const data = await loginUser(userData)
-            console.log(data)
-            setLoginErr(null)
-        } catch (err) {
-            console.error(err)
-            setLoginErr(err)
-        } finally {
-            setLoginStatus("idle")
-        }
-    } */
-
+    const state = useNavigation().state
     const errorMessage = useActionData()
     return (
         <main className="login">
             <h1>Sign in your account</h1>
             {messageElement}
-            {
-                //loginErr?.message && <h2>{loginErr?.message || null}</h2>
-            }
             {errorMessage && <h2>{errorMessage}</h2>}
             <Form method="POST" replace>
+                <input type="email" name="email"></input>
+                <input type="password" name="password"></input>
                 <input
-                    type="email"
-                    name="email"
-                    //value={userData.email}
-                    //onChange={handleChange}
-                ></input>
-                <input
-                    type="password"
-                    name="password"
-                    //value={userData.password}
-                    //onChange={handleChange}
-                ></input>
-                <input
+                    className="loginSubmitBtn"
                     type="submit"
                     value="Log in"
-                    //disabled={loginStatus === "submitting" ? true : false}
+                    disabled={state === "submitting" ? true : false}
                 />
             </Form>
         </main>
