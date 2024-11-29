@@ -56,45 +56,49 @@ export default function App() {
                     action={LoginAction}
                 />
 
-                <Route path="host" element={<HostLayout />}>
+                <Route
+                    path="host"
+                    element={<HostLayout />}
+                    loader={async (obj) => await isAuthorized(obj)}
+                >
                     <Route
                         path=""
-                        loader={async () => await isAuthorized()}
+                        //loader={async () => await isAuthorized()}
                         element={<Host />}
                     />
                     <Route
                         path="income"
-                        loader={async () => await isAuthorized()}
+                        //loader={async () => await isAuthorized()}
                         element={<Income />}
                     />
                     <Route
                         path="vans"
-                        loader={async () => await HostVansLoader()}
+                        //loader={async () => await HostVansLoader()}
                     >
                         <Route
                             index
                             element={<HostVans />}
-                            loader={async () => await isAuthorized()}
+                            //loader={async () => await isAuthorized()}
                         />
                         <Route
                             path=":id"
                             element={<HostVansLayout />}
-                            loader={async () => await isAuthorized()}
+                            //loader={async () => await isAuthorized()}
                         >
                             <Route
                                 path=""
                                 element={<Details />}
-                                loader={async () => await isAuthorized()}
+                                //loader={async () => await isAuthorized()}
                             />
                             <Route
                                 path="pricing"
                                 element={<Pricing />}
-                                loader={async () => await isAuthorized()}
+                                //loader={async () => await isAuthorized()}
                             />
                             <Route
                                 path="photos"
                                 element={<Photos />}
-                                loader={async () => await isAuthorized()}
+                                //loader={async () => await isAuthorized()}
                             />
                         </Route>
                     </Route>

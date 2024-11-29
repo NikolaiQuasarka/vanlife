@@ -21,7 +21,8 @@ export async function action({ request }) {
         console.log(data)
         setLoggedIn(true)
 
-        const rediretTo = redirect("/host")
+        const reditectPath = new URL(request.url).searchParams.get("redirectTo")
+        const rediretTo = redirect(reditectPath)
         rediretTo.body = true
         return rediretTo
     } catch (err) {
