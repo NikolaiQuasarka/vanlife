@@ -1,56 +1,72 @@
-import { useEffect, useState } from "react"
-import { Link, useSearchParams, useLoaderData } from "react-router-dom"
+import { Suspense, useEffect, useState } from "react"
+import {
+    Link,
+    useSearchParams,
+    useLoaderData,
+    defer,
+    Await,
+} from "react-router-dom"
 import { getVans } from "../api"
 
 export function loader() {
-    return getVans()
+    const vansPromise = getVans()
+    return defer({ vans: vansPromise })
 }
 
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const vans = useLoaderData()
-
+    const vans = useLoaderData().vans
     const typeFilter = searchParams.get("type")
-    const filteredBuses =
-        typeFilter ? vans.filter((bus) => bus.type === typeFilter) : vans
 
-    const busesElements =
-        filteredBuses === null ? false : (
-            filteredBuses.map((el) => {
-                return (
-                    <Link
-                        to={el.id}
-                        key={el.id}
-                        state={{
-                            search:
-                                searchParams ? searchParams.toString() : null,
-                            type: typeFilter,
-                        }}
-                    >
-                        <img src={el.imageUrl} />
-                        <div className="info">
-                            <span className="name">{el.name}</span>
-                            <span className="price">
-                                ${el.price}
-                                <br />
-                                <span
-                                    style={{
-                                        fontSize: "70%",
-                                        fontWeight: "500",
+    const busesElements = (
+        <Await resolve={vans}>
+            {(vansData) => {
+                const filteredBuses =
+                    typeFilter ?
+                        vansData.filter((bus) => bus.type === typeFilter)
+                    :   vansData
+                return filteredBuses === null ? false : (
+                        filteredBuses.map((el) => {
+                            return (
+                                <Link
+                                    to={el.id}
+                                    key={el.id}
+                                    state={{
+                                        search:
+                                            searchParams ?
+                                                searchParams.toString()
+                                            :   null,
+                                        type: typeFilter,
                                     }}
                                 >
-                                    /day
-                                </span>
-                            </span>
-                        </div>
-                        <div className="type">
-                            {el.type.charAt(0).toUpperCase() + el.type.slice(1)}
-                        </div>
-                    </Link>
-                )
-            })
-        )
+                                    <img src={el.imageUrl} />
+                                    <div className="info">
+                                        <span className="name">{el.name}</span>
+                                        <span className="price">
+                                            ${el.price}
+                                            <br />
+                                            <span
+                                                style={{
+                                                    fontSize: "70%",
+                                                    fontWeight: "500",
+                                                }}
+                                            >
+                                                /day
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div className="type">
+                                        {el.type.charAt(0).toUpperCase() +
+                                            el.type.slice(1)}
+                                    </div>
+                                </Link>
+                            )
+                        })
+                    )
+            }}
+        </Await>
+    )
 
     return (
         <main className="vans">
@@ -96,7 +112,11 @@ export default function Vans() {
                     :   null}
                 </div>
             </section>
-            <section className="list">{busesElements}</section>
+            <section className="list">
+                <Suspense fallback={<h>Loading...</h>}>
+                    {busesElements}
+                </Suspense>
+            </section>
         </main>
     )
 }
