@@ -60,6 +60,7 @@ export default function App() {
                     path="host"
                     element={<HostLayout />}
                     loader={async (obj) => await isAuthorized(obj)}
+                    errorElement={<ErrorElement />}
                 >
                     <Route
                         path=""

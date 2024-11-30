@@ -8,14 +8,12 @@ import {
 } from "react-router-dom"
 import { getVans } from "../api"
 
-export function loader() {
+export async function loader() {
     const vansPromise = getVans()
     return defer({ vans: vansPromise })
 }
-
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
-
     const vans = useLoaderData().vans
     const typeFilter = searchParams.get("type")
 
