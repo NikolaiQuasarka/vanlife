@@ -78,7 +78,7 @@ export default function App() {
                         <Route
                             index
                             element={<HostVans />}
-                            //loader={async () => await isAuthorized()}
+                            loader={async () => await HostVansLoader()}
                         />
                         <Route
                             path=":id"
